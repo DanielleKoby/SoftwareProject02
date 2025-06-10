@@ -13,20 +13,47 @@ def validate_integer_like_input(s_val):
         return None # Not a valid number at all (e.g., "abc")
 
 # data file
-def read_data_from_files(input_1, input_2):
-    datapoints = []
-    for line in sys.stdin:  # Reads line by line from stdin
-        line = line.strip()  # Remove leading/trailing whitespace, including newline
-        if not line:  # Skip empty lines
-            continue
-        try:
-            vals = line.split(',')
-            vector = [float(x) for x in vals]
-            datapoints.append(vector)
-        except ValueError:
-            print("An Error Has Occurred") # Specific error for malformed data
-            sys.exit(1)
-    return datapoints
+def read_data_from_files(file1_path, file2_path):
+    data_from_file1 = {}
+    try:
+        with open(file1_path, 'r') as f1:
+            for line in f1:
+                parts = line.strip().split(',')
+                if not parts or not parts[0]:
+                    continue
+                # Handle keys like "48.0000" by converting to float then int
+                key = int(float(parts[0]))
+                values = [float(v) for v in parts[1:]]
+                data_from_file1[key] = values
+    except (FileNotFoundError, ValueError):
+        print("An Error Has Occurred", file=sys.stderr)
+        sys.exit(1)
+
+    joined_list_with_keys = []
+    try:
+        with open(file2_path, 'r') as f2:
+            for line in f2:
+                parts = line.strip().split(',')
+                if not parts or not parts[0]:
+                    continue
+                key = int(float(parts[0]))
+                
+                # This is the inner join logic
+                if key in data_from_file1:
+                    # Combine values from both files
+                    all_values = data_from_file1[key] + [float(v) for v in parts[1:]]
+                    joined_list_with_keys.append([key, all_values])
+    except (FileNotFoundError, ValueError):
+        print("An Error Has Occurred", file=sys.stderr)
+        sys.exit(1)
+
+    # Sort the results based on the key
+    joined_list_with_keys.sort(key=lambda item: item[0])
+
+    # Return only the list of vectors, without the keys
+    final_result = [item[1] for item in joined_list_with_keys]
+    
+    return final_result
 
 
 # K value
