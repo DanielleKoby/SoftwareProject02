@@ -98,13 +98,8 @@ def main():
         print("An Error Has Occurred")
         sys.exit(1)
 
-    d = len(datapoints[0][1])
+    d = len(datapoints[0])
     n = len(datapoints)
     k = get_k(n, k_user)
-    clusters = [[[], [], []] for i in range(k)]
-    vec_new_position_array = n*[0]
-    vec_prev_position_array = n*[None]
-    best_cluster_index = 0
-    new_cluster_index = 0
-    prev_cluster_index = 0
+
 
