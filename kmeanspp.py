@@ -133,4 +133,4 @@ def main():
     print("*****")
     print(d, n, k)
 
-
+main()
