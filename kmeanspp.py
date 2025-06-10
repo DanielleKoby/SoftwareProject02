@@ -110,6 +110,7 @@ def main():
     # get user's info 
     # if no iteration number was entered:
     if len(sys.argv) == 6:
+        print("entered 6 args")
         iteration_number_user = sys.argv[2]
         ITERATION_NUM = get_iteration_num(iteration_number_user)
         eps_number_user = sys.argv[3]
