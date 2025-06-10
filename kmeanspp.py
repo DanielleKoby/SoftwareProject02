@@ -26,7 +26,7 @@ def read_data_from_files(file1_path, file2_path):
                 values = [float(v) for v in parts[1:]]
                 data_from_file1[key] = values
     except (FileNotFoundError, ValueError):
-        print("An Error Has Occurred", file=sys.stderr)
+        print("An Error Has Occurred")
         sys.exit(1)
 
     joined_list_with_keys = []
