@@ -101,5 +101,8 @@ def main():
     d = len(datapoints[0])
     n = len(datapoints)
     k = get_k(n, k_user)
+    print(datapoints)
+    print("*****")
+    print(d, n, k)
 
 
